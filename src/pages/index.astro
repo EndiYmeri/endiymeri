@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import About from '../components/About';
+import Projects from '../components/Projects';
+import Contact from '../components/Contact';
+import PageScrollBlur from '../components/PageScrollBlur';
+---
+
+<Layout>
+  <Header client:load />
+  <PageScrollBlur client:load />
+  <main>
+    <Hero client:load />
+    <About client:visible />
+    <Projects client:visible />
+    <Contact client:visible />
+  </main>
+  <footer class="border-t border-line px-6 py-8 text-center text-sm text-steel md:px-10">
+    © {new Date().getFullYear()} Endi Ymeri
+  </footer>
+</Layout>
