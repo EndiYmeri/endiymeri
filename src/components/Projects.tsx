@@ -228,7 +228,7 @@ export default function Projects() {
               key={project.title}
               className="flex w-full max-w-md flex-col items-center text-center md:w-80 lg:w-96"
             >
-              <div className="relative flex h-72 w-full items-end justify-center overflow-visible px-4 pb-2 pt-28 sm:h-80 sm:pt-32 md:h-[26rem] md:pt-40">
+              <div className="relative flex h-72 w-full items-end justify-center overflow-visible p-4  sm:h-80 md:h-[20rem]">
                 <ProjectFolder project={project} />
               </div>
               <h3 className="mt-8 font-display text-lg font-semibold tracking-tight text-bone">
