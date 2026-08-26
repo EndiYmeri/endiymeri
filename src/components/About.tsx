@@ -20,14 +20,14 @@ export default function About() {
     >
       <div className="absolute inset-0 opacity-55">
         <SoftAurora
-          speed={0.55}
+          speed={0.45}
           scale={1.15}
           brightness={0.55}
           color1="#3a3f48"
           color2="#8a9199"
           bandHeight={0.35}
           bandSpread={1.4}
-          enableMouseInteraction
+          enableMouseInteraction={false}
           mouseInfluence={0.2}
         />
       </div>

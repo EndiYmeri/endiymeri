@@ -11,11 +11,11 @@ export default function Hero() {
       <div className="absolute inset-0 bg-ink">
         <DotField
           className="h-full w-full"
-          dotRadius={1.4}
-          dotSpacing={16}
+          dotRadius={1.35}
+          dotSpacing={18}
           bulgeStrength={58}
           glowRadius={180}
-          waveAmplitude={1.2}
+          waveAmplitude={0.85}
           gradientFrom="rgba(197, 202, 209, 0.28)"
           gradientTo="rgba(138, 145, 153, 0.18)"
           glowColor="#1c1f26"

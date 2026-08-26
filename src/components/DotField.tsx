@@ -65,7 +65,10 @@ const DotField = memo(({
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
     if (!ctx) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Cap DPR — desktop retina + full-viewport dots dominate main-thread time.
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
     let resizeTimer: ReturnType<typeof setTimeout>;
     let motionReady = false;
     let visible = true;
@@ -80,7 +83,7 @@ const DotField = memo(({
     }
 
     function doResize() {
-      const rect = canvas!.parentElement!.getBoundingClientRect();
+      const rect = root!.getBoundingClientRect();
       const w = rect.width;
       const h = rect.height;
 
@@ -98,13 +101,16 @@ const DotField = memo(({
         offsetY: rect.top + window.scrollY,
       };
 
+      cachedGrad = null;
       buildDots(w, h);
       drawFrame(true);
     }
 
     function buildDots(w: number, h: number) {
       const p = propsRef.current;
-      const step = (p.dotRadius as number) + (p.dotSpacing as number);
+      // Wider viewports get a looser grid so desktop Lighthouse stays cheap.
+      const density = w >= 900 ? 1.45 : w >= 640 ? 1.2 : 1;
+      const step = ((p.dotRadius as number) + (p.dotSpacing as number)) * density;
       const cols = Math.floor(w / step);
       const rows = Math.floor(h / step);
       const padX = (w % step) / 2;
@@ -309,6 +315,8 @@ const DotField = memo(({
       pause();
       io.disconnect();
       clearTimeout(resizeTimer);
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('visibilitychange', onVisibility);

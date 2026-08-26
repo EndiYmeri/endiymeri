@@ -6,6 +6,7 @@ import MacWindow from './MacWindow';
 type ProjectMedia = {
   type: 'image' | 'video';
   src: string;
+  poster?: string;
 };
 
 type Project = {
@@ -27,9 +28,17 @@ const projects: Project[] = [
     windowShape: 'laptop',
     windowTitle: 'celular.al',
     media: [
-      { type: 'video', src: '/projects/celular/preview-2.webm' },
-      { type: 'image', src: '/projects/celular/search-screen.png' },
-      { type: 'video', src: '/projects/celular/preview-1.webm' },
+      {
+        type: 'video',
+        src: '/projects/celular/preview-2.webm',
+        poster: '/projects/celular/poster-2.jpg',
+      },
+      { type: 'image', src: '/projects/celular/search-screen.webp' },
+      {
+        type: 'video',
+        src: '/projects/celular/preview-1.webm',
+        poster: '/projects/celular/poster-1.jpg',
+      },
     ],
   },
   {
@@ -40,9 +49,9 @@ const projects: Project[] = [
     windowShape: 'laptop',
     windowTitle: 'besadevelopments.co.uk',
     media: [
-      { type: 'image', src: '/projects/besa/screen1.png' },
-      { type: 'image', src: '/projects/besa/screen2.png' },
-      { type: 'image', src: '/projects/besa/screen3.png' },
+      { type: 'image', src: '/projects/besa/screen1.webp' },
+      { type: 'image', src: '/projects/besa/screen2.webp' },
+      { type: 'image', src: '/projects/besa/screen3.webp' },
     ],
   },
 ];
@@ -88,11 +97,13 @@ function PaperImage({
 
 function PaperVideo({
   src,
+  poster,
   active,
   shape,
   title,
 }: {
   src: string;
+  poster?: string;
   active: boolean;
   shape: 'phone' | 'laptop';
   title?: string;
@@ -133,10 +144,11 @@ function PaperVideo({
       <video
         ref={ref}
         src={src}
+        poster={poster}
         muted
         playsInline
-        preload="metadata"
-        className="h-full w-full object-cover"
+        preload="none"
+        className="h-full w-full object-cover object-top"
         draggable={false}
       />
     </WindowShell>
@@ -166,6 +178,7 @@ function ProjectFolder({ project }: { project: Project }) {
           <PaperVideo
             key={item.src}
             src={item.src}
+            poster={item.poster}
             active={open}
             shape={project.windowShape}
             title={project.windowTitle}
