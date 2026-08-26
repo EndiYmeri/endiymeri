@@ -1,12 +1,23 @@
 import BorderGlow from './BorderGlow';
 
-interface GlowButtonProps {
-  href: string;
+type GlowButtonProps = {
   children: React.ReactNode;
   variant?: 'primary' | 'ghost';
   className?: string;
-  external?: boolean;
-}
+} & (
+  | {
+      href: string;
+      external?: boolean;
+      type?: never;
+      disabled?: never;
+    }
+  | {
+      href?: undefined;
+      type?: 'button' | 'submit';
+      disabled?: boolean;
+      external?: never;
+    }
+);
 
 export default function GlowButton({
   href,
@@ -14,8 +25,13 @@ export default function GlowButton({
   variant = 'primary',
   className = '',
   external = false,
+  type = 'button',
+  disabled = false,
 }: GlowButtonProps) {
   const isPrimary = variant === 'primary';
+  const contentClass = `inline-flex items-center justify-center px-7 py-3.5 font-display text-sm font-semibold tracking-wide ${
+    isPrimary ? 'text-ink' : 'text-bone'
+  } ${disabled ? 'opacity-60' : ''}`;
 
   return (
     <BorderGlow
@@ -35,15 +51,19 @@ export default function GlowButton({
           : ['#8a9199', '#c5cad1', '#5c636b']
       }
     >
-      <a
-        href={href}
-        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        className={`inline-flex items-center justify-center px-7 py-3.5 font-display text-sm font-semibold tracking-wide ${
-          isPrimary ? 'text-ink' : 'text-bone'
-        }`}
-      >
-        {children}
-      </a>
+      {href ? (
+        <a
+          href={href}
+          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          className={contentClass}
+        >
+          {children}
+        </a>
+      ) : (
+        <button type={type} disabled={disabled} className={contentClass}>
+          {children}
+        </button>
+      )}
     </BorderGlow>
   );
 }
