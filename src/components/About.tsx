@@ -15,7 +15,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden border-t border-line pt-16 pb-24 md:pt-24 md:pb-32"
+      className="relative scroll-mt-24 overflow-hidden border-t border-line pt-16 pb-24 md:pt-24 md:pb-32"
       aria-labelledby="about-heading"
     >
       <div className="absolute inset-0 opacity-55">
