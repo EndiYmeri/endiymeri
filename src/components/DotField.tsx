@@ -65,6 +65,7 @@ const DotField = memo(({
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
     if (!ctx) return;
+    const root = canvas.parentElement ?? canvas;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Cap DPR — desktop retina + full-viewport dots dominate main-thread time.
